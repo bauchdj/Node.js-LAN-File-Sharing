@@ -15,13 +15,15 @@ let previousIpPortString = null;
  * @param {number} port
  */
 function updateAddressInfo(addresses, port) {
-    const newIpPortString = addresses.map(function (address) {
-        return [address, port].join(":");
-    }).join(", ");
+    // const newIpPortString = addresses.map(function (address) {
+    //     return [address, port].join(":");
+    // }).join(", ");
+	const newIpPortString = window.location.href; // grab url qr code instead of address:port
     if (previousIpPortString != newIpPortString) {
         IPandPortElement.innerText = newIpPortString;
         if (addresses.length > 0) {
-            theQRCodeElement.setAttribute("src", `/qr_codes/${addresses[0]}_${port}.png`)
+            // theQRCodeElement.setAttribute("src", `/qr_codes/${addresses[0]}_${port}.png`)
+            theQRCodeElement.setAttribute("src", `/qr_codes/${window.location.host}.png`) // domain instead of address:port
         } else {
             theQRCodeElement.setAttribute("src", "");
         }
@@ -307,9 +309,10 @@ function refreshInfoOnPage() {
             previousRootContentMD5 = rootContentMD5;
         }
         
+		//const fileToUploadInputElement = document.getElementById('fileToUpload');
         if(multiUpload && !multiUploadFileInput) {
             multiUploadFileInput = true;
-            fileToUploadInputElement.addAttribute("multiple");
+            fileToUploadInputElement.setAttribute("multiple", '');
         } else if(!multiUpload && multiUploadFileInput) {
             multiUploadFileInput = false;
             fileToUploadInputElement.removeAttribute("multiple");
@@ -317,7 +320,7 @@ function refreshInfoOnPage() {
         
         if(folderUpload && !folderUploadFileInput) {
             folderUploadFileInput = true;
-            fileToUploadInputElement.addAttribute("webkitdirectory");
+            fileToUploadInputElement.setAttribute("webkitdirectory", '');
         } else if(!folderUpload && folderUploadFileInput) {
             folderUploadFileInput = false;
             fileToUploadInputElement.removeAttribute("webkitdirectory");

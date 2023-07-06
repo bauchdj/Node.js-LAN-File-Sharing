@@ -3,7 +3,7 @@ var fileShare = require('./fileshare')({
     filesFolderPath: (process.argv[3] || null),
     port: (process.argv[2] || process.env.PORT),
     allowDeletion: false,
-    multiUpload: false,
+    multiUpload: true,
     folderUpload: false,
     progressCallback: function (progress, doneFileName) {
         //TODO: connect to UI when writing the electron app.

@@ -456,7 +456,8 @@ function generateQRCodeIfNotExists(imagePath, address, port) {
             if (exists) {
                 resolve();
             } else {
-                let qr_svg = qr_image.image(`http://${address}:${port}/`, { type: 'png' });
+                //let qr_svg = qr_image.image(`http://${address}:${port}/`, { type: 'png' });
+                let qr_svg = qr_image.image('https://drop.talkofchrist.org/', { type: 'png' });
                 qr_svg.pipe(fs.createWriteStream(imagePath))
                     .on("finish", () => { resolve(); })
                     .on("error", () => { reject(); });
@@ -469,7 +470,8 @@ function getAddressesWQRCodes(publicPath, port) {
     const addresses = getAddresses();
     return Promise.all(addresses.map((address) => {
         const imagePath = path.join(publicPath, `./qr_codes/${address}_${port}.png`);
-        return generateQRCodeIfNotExists(imagePath, address, port).catch(() => {
+        //return generateQRCodeIfNotExists(imagePath, address, port).catch(() => {
+        return generateQRCodeIfNotExists(path.join(publicPath, `./qr_codes/drop.talkofchrist.org.png`), address, port).catch(() => { // passing url qr-code path instead of address:port
             // NOTE(baris): Ignoring errors here.
         });
     })).then(() => addresses);
